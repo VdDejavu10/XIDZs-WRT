@@ -231,6 +231,7 @@ log_status "SUCCESS" "Misc settings configured"
 
 # add auto sinkron jam, Clean Cache, Remove mm tty
 log_status "INFO" "Add Auto Sinkron Jam, Clean Cache, Remove mm tty..."
+sed -i '/exit 0/i #/sbin/free.sh' /etc/rc.local 2>/dev/null
 sed -i '/exit 0/i #sh /usr/bin/autojam.sh bug.com' /etc/rc.local 2>/dev/null
 rm -f /etc/hotplug.d/tty/25-modemmanager-tty 2>/dev/null
 log_status "SUCCESS" "Auto sync, cache settings, remove mm tty applied"
@@ -348,7 +349,7 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
         case "$pkg" in
             luci-app-openclash)
                 rm -f /etc/config/openclash1 2>/dev/null
-                rm -rf /etc/openclash /usr/share/openclash /usr/lib/lua/luci/view/openclash 2>/dev/null
+                rm -rf /etc/openclash /usr/share/openclash 2>/dev/null
                 sed -i '104s/Enable/Disable/' /etc/config/alpha 2>/dev/null
                 sed -i '167s#.*#<!-- & -->#' /usr/lib/lua/luci/view/themes/argon/header.htm 2>/dev/null
                 sed -i '187s#.*#<!-- & -->#' /usr/lib/lua/luci/view/themes/argon/header.htm 2>/dev/null
