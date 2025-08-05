@@ -347,6 +347,8 @@ body.stats-open .main-content{filter:blur(4px);transition:filter .3s}
   .charts2-container{padding:3px}
   .grid-charts2{gap:3px}
   .grid-charts2 .chart{min-height:50px;padding:1px}
+  .chart-btn{padding:6px 8px;font-size:.6rem}
+  .img-cnt{padding:8px}
 }
 
 /* TINY SCREENS */
@@ -449,7 +451,7 @@ body.stats-open .main-content{filter:blur(4px);transition:filter .3s}
               <div data-netdata="system.load" data-chart-library="easypiechart" data-title="LOAD" data-width="100%" data-points="720" data-colors="#ef4444"></div>
             </div>
             <div class="chart">
-              <div data-netdata="cpu.cpufreq" data-chart-library="easypiechart" data-title="CPU FREQ" data-width="100%" data-points="720" data-colors="#fbbf24" data-units="MHz"></div>
+              <div data-netdata="netfilter.conntrack_sockets" data-chart-library="easypiechart" data-title="CONNECTIONS" data-width="100%" data-points="720" data-colors="#fbbf24"></div>
             </div>
           </div>
         </div>
@@ -693,7 +695,7 @@ function init() {
     setTimeout(showModal, 100);
   }
   
-  console.log('Network Monitor initialized with simple scroll system');
+  console.log('Network Monitor initialized with connection tracking');
   console.log(`Mode: ${window.innerWidth > 768 ? 'Desktop (Scrollable)' : 'Mobile (Grid)'}`);
 }
 
