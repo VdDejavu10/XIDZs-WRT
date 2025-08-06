@@ -1,0 +1,24 @@
+#!/bin/sh /etc/rc.common
+# (C) 2024 siltesa
+
+START=99
+STOP=15
+
+start_service() {
+    echo "helo world"
+    bash /etc/hat_fix.sh
+}
+
+start() {
+    start_service
+}
+
+stop() {
+    # If you have a stop function, you can define it here.
+    :
+}
+
+restart() {
+    # If you want to implement restart functionality, you can define it here.
+    :
+}
