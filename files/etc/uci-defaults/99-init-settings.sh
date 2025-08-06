@@ -213,7 +213,19 @@ if opkg list-installed 2>/dev/null | grep -q luci-app-amlogic; then
     sed -i '/exit 0/i #sleep 5 && /usr/bin/k6hgled -r' /etc/rc.local 2>/dev/null
 else
     log_status "INFO" "luci-app-amlogic not detected"
-    rm -f /usr/bin/k5hgled /usr/bin/k6hgled /usr/bin/k5hgledon /usr/bin/k6hgledon 2>/dev/null
+    rm -f /usr/bin/k5hgled /usr/bin/k6hgled 2>/dev/null
+    rm -f /usr/bin/k5hgledon /usr/bin/k6hgledon 2>/dev/null
+fi
+
+# setup devices orangepi series
+log_status "INFO" "Checking for OrangePi device configuration..."
+if grep -q "Orange Pi Zero2\|Orange Pi Zero3" /proc/device-tree/model 2>/dev/null; then
+    log_status "INFO" "Setting up HAT script for OrangePi Zero"
+    chmod +x /etc/hat_fix.sh 2>/dev/null
+    /etc/init.d/hat enable 2>/dev/null
+else
+    log_status "INFO" "Removing HAT script - Not OrangePi Zero"
+    rm -f /etc/hat_fix.sh /etc/init.d/hat
 fi
 
 # setup misc settings
@@ -311,7 +323,7 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
             luci-app-openclash)
                 chmod +x /etc/openclash/core/clash_meta 2>/dev/null
                 chmod +x /etc/openclash/Country.mmdb 2>/dev/null
-                chmod +r /etc/openclash/Geo* 2>/dev/null
+                chmod +x /etc/openclash/Geo* 2>/dev/null
                 chmod -R +x /usr/share/openclash 2>/dev/null
                 
                 log_status "INFO" "Patching OpenClash overview..."
@@ -334,7 +346,7 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
                 ;;
             luci-app-nikki)
                 rm -rf /etc/nikki/run/providers 2>/dev/null
-                chmod +r /etc/nikki/run/Geo* 2>/dev/null
+                chmod +x /etc/nikki/run/Geo* 2>/dev/null
                 
                 log_status "INFO" "Add config editor nikki..."
                 if [ -f "/root/nikki-x.sh" ]; then
@@ -425,7 +437,7 @@ log_status "INFO" "Check log file: $LOG_FILE"
 log_status "INFO" "========================================="
 
 sync
-sleep 7
+sleep 8
 reboot
 
 exit 0
