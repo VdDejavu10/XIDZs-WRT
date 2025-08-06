@@ -238,30 +238,39 @@ log_status "SUCCESS" "Auto sync, cache settings, remove mm tty applied"
 
 # add TTL
 log_status "INFO" "Adding and running TTL script..."
-if [ -f /root/indowrt.sh ]; then
+if [ -f "/root/indowrt.sh" ]; then
     chmod +x /root/indowrt.sh 2>/dev/null
-    /root/indowrt.sh
-    log_status "SUCCESS" "TTL script executed"
+    if /root/indowrt.sh; then
+        log_status "SUCCESS" "TTL script executed successfully"
+    else
+        log_status "ERROR" "Failed to execute TTL script (exit code: $?)"
+    fi
 else
     log_status "WARNING" "indowrt.sh not found, skipping TTL configuration"
 fi
 
 # add rules
 log_status "INFO" "Adding and running rules script..."
-if [ -f /root/rules.sh ]; then
+if [ -f "/root/rules.sh" ]; then
     chmod +x /root/rules.sh 2>/dev/null
-    /root/rules.sh
-    log_status "SUCCESS" "Rules script executed"
+    if /root/rules.sh; then
+        log_status "SUCCESS" "Rules script executed successfully"
+    else
+        log_status "ERROR" "Failed to execute rules script (exit code: $?)"
+    fi
 else
     log_status "WARNING" "rules.sh not found, skipping Rules configuration"
 fi
 
 # mv_safe
 log_status "INFO" "Mv safe configuration..."
-if [ -f /root/mv_safe.sh ]; then
+if [ -f "/root/mv_safe.sh" ]; then
     chmod +x /root/mv_safe.sh 2>/dev/null
-    /root/mv_safe.sh
-    log_status "SUCCESS" "mv_safe configuration script executed"
+    if /root/mv_safe.sh; then
+        log_status "SUCCESS" "mv_safe configuration script executed successfully"
+    else
+        log_status "ERROR" "Failed to execute mv_safe script (exit code: $?)"
+    fi
 else
     log_status "WARNING" "mv_safe.sh not found, skipping mv_safe configuration"
 fi
