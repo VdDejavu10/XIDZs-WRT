@@ -120,8 +120,12 @@ rules:
 - MATCH,SERVER-UMUM
 dns:
   proxy-server-nameserver:
-    - dhcp://usb0 # eth1 wwan0
-    - 192.168.42.129 # ganti ip modemmu
+    - 112.215.203.246 # DNS XL
+    - 112.215.203.247 # DNS XL
+    - 112.215.203.248 # DNS XL
+    - 112.215.203.254 # DNS XL
+    - 112.215.198.248 # DNS XL
+    - 112.215.198.254 # DNS XL
   nameserver:
     - 1.1.1.1
     - 8.8.8.8
