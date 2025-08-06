@@ -246,16 +246,6 @@ else
     log_status "WARNING" "indowrt.sh not found, skipping TTL configuration"
 fi
 
-# nikki-x
-log_status "INFO" "Adding and running Nikki-x script..."
-if [ -f /root/nikki-x.sh ]; then
-    chmod +x /root/nikki-x.sh 2>/dev/null
-    /root/nikki-x.sh
-    log_status "SUCCESS" "Nikki-x script executed"
-else
-    log_status "WARNING" "Nikki-x.sh not found, skipping Nikki configuration"
-fi
-
 # add rules
 log_status "INFO" "Adding and running rules script..."
 if [ -f /root/rules.sh ]; then
@@ -333,6 +323,8 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
             luci-app-nikki)
                 rm -rf /etc/nikki/run/providers 2>/dev/null
                 chmod +x /etc/nikki/run/Geo* 2>/dev/null
+                chmod +x /root/nikki-x.sh 2>/dev/null
+                /root/nikki-x.sh
                 log_status "INFO" "Creating symlinks from OpenClash to Nikki..."
                 ln -sf /etc/openclash/proxy_provider /etc/nikki/run 2>/dev/null
                 ln -sf /etc/openclash/rule_provider /etc/nikki/run 2>/dev/null
@@ -357,6 +349,7 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
                 ;;
             luci-app-nikki)
                 rm -rf /etc/config/nikki /etc/nikki 2>/dev/null
+                rm -rf /root/banxnikki.js /root/nikki-x.sh 2>/dev/null
                 sed -i '120s/Enable/Disable/' /etc/config/alpha 2>/dev/null
                 sed -i '168s#.*#<!-- & -->#' /usr/lib/lua/luci/view/themes/argon/header.htm 2>/dev/null
                 ;;
