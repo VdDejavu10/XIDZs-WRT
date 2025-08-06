@@ -219,12 +219,12 @@ fi
 
 # setup devices orangepi series
 log_status "INFO" "Checking for OrangePi device configuration..."
-if grep -q "Orange Pi Zero2\|Orange Pi Zero3" /proc/device-tree/model 2>/dev/null; then
-    log_status "INFO" "Setting up HAT script for OrangePi Zero"
+if grep -q "OrangePi Zero2\|OrangePi Zero3" /proc/device-tree/model 2>/dev/null; then
+    log_status "INFO" "Setting up HAT script for OrangePi Zero Devices"
     chmod +x /etc/hat_fix.sh 2>/dev/null
     /etc/init.d/hat enable 2>/dev/null
 else
-    log_status "INFO" "Removing HAT script - Not OrangePi Zero"
+    log_status "INFO" "Removing HAT script - Not OrangePi Zero Devices"
     rm -f /etc/hat_fix.sh /etc/init.d/hat
 fi
 
