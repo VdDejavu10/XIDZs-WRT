@@ -302,13 +302,16 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
             luci-app-openclash)
                 chmod +x /etc/openclash/core/clash_meta 2>/dev/null
                 chmod +x /etc/openclash/Country.mmdb 2>/dev/null
-                chmod +x /etc/openclash/Geo* 2>/dev/null
+                chmod +r /etc/openclash/Geo* 2>/dev/null
                 chmod -R +x /usr/share/openclash 2>/dev/null
                 
                 log_status "INFO" "Patching OpenClash overview..."
-                if [ -f /usr/bin/ocpatch.sh ]; then
-                    bash /usr/bin/ocpatch.sh >/dev/null 2>&1
-                    log_status "SUCCESS" "OpenClash overview patched"
+                if [ -f "/usr/bin/ocpatch.sh" ]; then
+                    if bash /usr/bin/ocpatch.sh >/dev/null 2>&1; then
+                        log_status "SUCCESS" "OpenClash overview patched"
+                    else
+                        log_status "ERROR" "Failed to patch OpenClash overview"
+                    fi
                 else
                     log_status "WARNING" "ocpatch.sh not found"
                 fi
@@ -322,9 +325,20 @@ for pkg in luci-app-openclash luci-app-nikki luci-app-passwall; do
                 ;;
             luci-app-nikki)
                 rm -rf /etc/nikki/run/providers 2>/dev/null
-                chmod +x /etc/nikki/run/Geo* 2>/dev/null
-                chmod +x /root/nikki-x.sh 2>/dev/null
-                /root/nikki-x.sh
+                chmod +r /etc/nikki/run/Geo* 2>/dev/null
+                
+                log_status "INFO" "Add config editor nikki..."
+                if [ -f "/root/nikki-x.sh" ]; then
+                    chmod +x /root/nikki-x.sh 2>/dev/null
+                    if /root/nikki-x.sh; then
+                        log_status "SUCCESS" "Nikki-x script executed successfully"
+                    else
+                        log_status "ERROR" "Failed to execute nikki-x.sh"
+                    fi
+                else
+                    log_status "WARNING" "nikki-x.sh not found, skipping Nikki configuration"
+                fi
+                
                 log_status "INFO" "Creating symlinks from OpenClash to Nikki..."
                 ln -sf /etc/openclash/proxy_provider /etc/nikki/run 2>/dev/null
                 ln -sf /etc/openclash/rule_provider /etc/nikki/run 2>/dev/null
