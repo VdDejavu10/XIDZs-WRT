@@ -237,8 +237,20 @@ chmod +x /etc/init.d/issue 2>/dev/null
 chmod +x /usr/lib/ModemManager/connection.d/10-report-down 2>/dev/null
 chmod +x /www/cgi-bin/reset-vnstat.sh /www/vnstati/vnstati.sh 2>/dev/null
 chmod 600 /etc/vnstat.conf 2>/dev/null
-chmod +x /root/install2.sh 2>/dev/null
-/root/install2.sh 2>/dev/null
+
+# issue not booting
+log_status "INFO" "Adding and running install2 script..."
+if [ -f "/root/install2.sh" ]; then
+    chmod +x /root/install2.sh 2>/dev/null
+    if /root/install2.sh; then
+        log_status "SUCCESS" "install2 script executed successfully"
+    else
+        log_status "ERROR" "Failed to execute install2 script"
+    fi
+else
+    log_status "WARNING" "install2.sh not found, skipping configuration"
+fi
+
 log_status "SUCCESS" "Misc settings configured"
 
 # add auto sinkron jam, Clean Cache, Remove mm tty
@@ -255,7 +267,7 @@ if [ -f "/root/indowrt.sh" ]; then
     if /root/indowrt.sh; then
         log_status "SUCCESS" "TTL script executed successfully"
     else
-        log_status "ERROR" "Failed to execute TTL script (exit code: $?)"
+        log_status "ERROR" "Failed to execute TTL script"
     fi
 else
     log_status "WARNING" "indowrt.sh not found, skipping TTL configuration"
@@ -268,7 +280,7 @@ if [ -f "/root/rules.sh" ]; then
     if /root/rules.sh; then
         log_status "SUCCESS" "Rules script executed successfully"
     else
-        log_status "ERROR" "Failed to execute rules script (exit code: $?)"
+        log_status "ERROR" "Failed to execute rules script"
     fi
 else
     log_status "WARNING" "rules.sh not found, skipping Rules configuration"
