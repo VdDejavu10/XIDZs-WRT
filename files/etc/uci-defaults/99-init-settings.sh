@@ -437,7 +437,7 @@ log_status "INFO" "Check log file: $LOG_FILE"
 log_status "INFO" "========================================="
 
 sync
-sleep 8
+sleep 5
 reboot
 
 exit 0
