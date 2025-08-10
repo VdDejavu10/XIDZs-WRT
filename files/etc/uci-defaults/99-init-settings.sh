@@ -217,17 +217,6 @@ else
     rm -f /usr/bin/k5hgledon /usr/bin/k6hgledon 2>/dev/null
 fi
 
-# setup devices orangepi series
-log_status "INFO" "Checking for OrangePi device configuration..."
-if grep -q "OrangePi Zero2\|OrangePi Zero3" /proc/device-tree/model 2>/dev/null; then
-    log_status "INFO" "Setting up HAT script for OrangePi Zero Devices"
-    chmod +x /etc/hat_fix.sh 2>/dev/null
-    /etc/init.d/hat enable 2>/dev/null
-else
-    log_status "INFO" "Removing HAT script - Not OrangePi Zero Devices"
-    rm -f /etc/hat_fix.sh /etc/init.d/hat
-fi
-
 # setup misc settings
 log_status "INFO" "Setting up misc settings and permissions..."
 sed -i -e 's/\[ -f \/etc\/banner \] && cat \/etc\/banner/#&/' -e 's/\[ -n \"\$FAILSAFE\" \] && cat \/etc\/banner.failsafe/& || \/usr\/bin\/foundx/' /etc/profile 2>/dev/null
@@ -259,6 +248,17 @@ sed -i '/exit 0/i #/sbin/free.sh' /etc/rc.local 2>/dev/null
 sed -i '/exit 0/i #sh /usr/bin/autojam.sh bug.com' /etc/rc.local 2>/dev/null
 rm -f /etc/hotplug.d/tty/25-modemmanager-tty 2>/dev/null
 log_status "SUCCESS" "Auto sync, cache settings, remove mm tty applied"
+
+# setup devices orangepi series
+log_status "INFO" "Checking for OrangePi device configuration..."
+if grep -q "OrangePi Zero2\|OrangePi Zero3" /proc/device-tree/model 2>/dev/null; then
+    log_status "INFO" "Setting up HAT script for OrangePi Zero Devices"
+    chmod +x /etc/hat_fix.sh 2>/dev/null
+    /etc/init.d/hat enable 2>/dev/null
+else
+    log_status "INFO" "Removing HAT script - Not OrangePi Zero Devices"
+    rm -f /etc/hat_fix.sh /etc/init.d/hat
+fi
 
 # add TTL
 log_status "INFO" "Adding and running TTL script..."
