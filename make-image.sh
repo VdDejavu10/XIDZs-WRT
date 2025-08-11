@@ -7,7 +7,7 @@
 set -e
 
 # Display Profile
-make info
+#make info
 
 # Validasi
 PROFILE=""
