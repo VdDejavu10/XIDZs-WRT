@@ -48,6 +48,14 @@
 - **Nikki + Configs** - Nikki proxy dengan preset configuration
 - **Passwall + Configs** - Passwall VPN dengan konfigurasi lengkap
 
+
+            ## XIDZs-WRT - INFORMATION ##
+            - Default IP: 192.168.1.1
+            - Default username: root
+            - Default password: xyyraa
+            - Default WIFI name: XIDZs-WRT | XIDZs-WRT_5G
+            - Default WIFI password: XIDZs2025
+            - Disarankan Reboot Devices Setelah Succes Boot
 ---
 
 <p align="center">
